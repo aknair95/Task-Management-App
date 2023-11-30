@@ -3,7 +3,7 @@ import TaskContext from "./taskContext";
 import axios from "axios";
 
 const TaskContextProvider=(props) =>{
-    const [tasks,setTasks]=useState();
+    const [tasks,setTasks]=useState([]);
 
     const addTaskHandler=async(newTask) =>{
         const updatedTasks=[...tasks,newTask];
