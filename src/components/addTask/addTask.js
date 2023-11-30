@@ -1,14 +1,31 @@
 import { Container, Form, Button, Row, Col, Dropdown } from "react-bootstrap";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import classes from "./addTask.module.css";
+import TaskContext from "../../store/taskContext";
 
 const AddTask=() =>{
     const taskNameRef=useRef();
     const descriptionRef=useRef();
     const priorityRef=useRef();
 
-    const formSubmitHandler=(e) =>{
+    const taskListCtx=useContext(TaskContext);
+
+    const formSubmitHandler=async(e) =>{
         e.preventDefault();
+
+        const newTask={
+            id: Math.random(),
+            taskName: taskNameRef.current.value,
+            description: descriptionRef.current.value,
+            priority: priorityRef.current.value,
+            status: false
+        }
+
+        taskListCtx.addTask(newTask);
+
+        taskNameRef.current.value="";
+        descriptionRef.current.value="";
+        priorityRef.current.value="";
     }
 
     return(
@@ -43,7 +60,7 @@ const AddTask=() =>{
                                     Select Priority
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item href="low">Low</Dropdown.Item>
+                                    <Dropdown.Item eventKey="low">Low</Dropdown.Item>
                                     <Dropdown.Item href="medium">Medium</Dropdown.Item>
                                     <Dropdown.Item href="high">High</Dropdown.Item>
                                 </Dropdown.Menu>
